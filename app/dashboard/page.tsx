@@ -1,5 +1,5 @@
 "use client";
-
+import { getSupabase } from "../../lib/supabase";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabase";
@@ -9,16 +9,21 @@ export default function Page() {
   const [email, setEmail] = useState<string | null>(null);
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      const e = data.user?.email ?? null;
-      if (!e) router.push("/login");
-      else setEmail(e);
-    });
-  }, [router]);
+    useEffect(() => {
+  const supabase = getSupabase();
+  if (!supabase) return;
 
+  supabase.auth.getUser().then(({ data }) => {
+    const e = data.user?.email ?? null;
+    if (!e) router.push("/login");
+    else setEmail(e);
+  });
+}, [router]);
   async function signOut() {
-    await supabase.auth.signOut();
-    router.push("/login");
+    const supabase = getSupabase();
+if (!supabase) return;
+await supabase.auth.signOut();
+
   }
 
   return (

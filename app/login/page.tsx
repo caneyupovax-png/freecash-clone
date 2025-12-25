@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { getSupabase } from "../../lib/supabase";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabase";
 
@@ -12,6 +12,9 @@ export default function Page() {
   const [loading, setLoading] = useState(false);
 
   async function signUp() {
+const supabase = getSupabase();
+if (!supabase) return setMsg("Supabase ENV eksik (Vercel ENV) veya SSR/build.");
+
     setMsg(null);
     setLoading(true);
     try {
@@ -27,6 +30,9 @@ export default function Page() {
   }
 
   async function signIn() {
+const supabase = getSupabase();
+if (!supabase) return setMsg("Supabase ENV eksik (Vercel ENV) veya SSR/build.");
+
     setMsg(null);
     setLoading(true);
     try {
