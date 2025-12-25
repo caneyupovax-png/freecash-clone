@@ -1,8 +1,9 @@
+
 "use client";
 
-import { getSupabase } from "../../lib/supabase";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { supabase } from "../../lib/supabase";
+import { getSupabase } from "../../lib/supabase";
 
 export default function Page() {
   const router = useRouter();
